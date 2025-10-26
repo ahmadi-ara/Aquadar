@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Outlets – Waterman</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; margin: 2em; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 1em 0; font-size: 1.2em; display: flex; align-items: center; }
+    button, a.back {
+      padding: 0.5em 1em;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      margin-left: 1em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .start { background: green; }
+    .stop { background: red; }
+    .completed { background: gray; }
+    .start.completed-btn { background: gray; }
+    .back { background: #555; margin-bottom: 1em; }
+    .back.disabled {
+      background: #999;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+    .timer { margin-left: 1em; font-weight: bold; min-width: 4ch; display: inline-block; }
+    .status { margin-left: 1em; font-weight: bold; }
+    .status.running { color: green; }
+    .status.completed { color: gray; }
+  </style>
+</head>
+<body>
+  <h1>💧 Outlets for {{ plot.name }}</h1>
+
+  <!-- Back button as link styled like a button -->
+  <a href="/waterman/"
+     class="back {% if is_any_running %}disabled{% endif %}"
+     {% if is_any_running %}aria-disabled="true" tabindex="-1"{% endif %}>
+    ⬅️ Back
+  </a>
+
+  <ul>
+  {% for outlet in outlets %}
+    <li>
+      {{ outlet.number }}
+      <button class="start" id="btn-{{ outlet.id }}" data-outlet="{{ outlet.id }}">Start</button>
+      <span class="status completed" id="status-{{ outlet.id }}">Not started</span>
+      <span class="timer" id="timer-{{ outlet.id }}"></span>
+    </li>
+  {% endfor %}
+  </ul>
+  <!-- Shared timer helpers -->
+  <script src="{% static 'water/timers.js' %}"></script>
+
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + "=")) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    const outletState = {};
+
+    function disableBackIfRunning() {
+      const anyRunning = Object.values(outletState).some(
+        state => state && state.runId
+      );
+      const backBtn = document.querySelector("a.back");
+      if (anyRunning) {
+        backBtn.classList.add("disabled");
+        backBtn.setAttribute("aria-disabled", "true");
+        backBtn.setAttribute("tabindex", "-1");
+      } else {
+        backBtn.classList.remove("disabled");
+        backBtn.removeAttribute("aria-disabled");
+        backBtn.removeAttribute("tabindex");
+      }
+    }
+
+    function getLocation() {
+      return new Promise(resolve => {
+        if (!navigator.geolocation) return resolve({ lat: null, lng: null });
+        navigator.geolocation.getCurrentPosition(
+          pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+          () => resolve({ lat: null, lng: null })
+        );
+      });
+    }
+
+    function updateUIRunning(outletId) {
+      const btn = document.getElementById(`btn-${outletId}`);
+      const statusEl = document.getElementById(`status-${outletId}`);
+      btn.textContent = "Stop";
+      btn.className = "stop";
+      btn.onclick = () => stopRun(outletId);
+      statusEl.textContent = "Running";
+      statusEl.className = "status running";
+      disableBackIfRunning();
+    }
+
+    function updateUICompleted(outletId) {
+      const btn = document.getElementById(`btn-${outletId}`);
+      const statusEl = document.getElementById(`status-${outletId}`);
+      btn.textContent = "Start";
+      btn.className = "start completed-btn";
+      btn.onclick = () => startRun(outletId);
+      statusEl.textContent = "Completed";
+      statusEl.className = "status completed";
+      disableBackIfRunning();
+    }
+
+    async function startRun(outletId) {
+      const btn = document.getElementById(`btn-${outletId}`);
+      const timerEl = document.getElementById(`timer-${outletId}`);
+      btn.disabled = true;
+      if (!outletState[outletId]) {
+        outletState[outletId] = { runId: null };
+      }
+      const state = outletState[outletId];
+      try {
+        const { lat, lng } = await getLocation();
+        const resp = await fetch("/api/runs/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            outlet_id: outletId,
+            gps_lat_start: lat,
+            gps_lng_start: lng
+          })
+        });
+        if (!resp.ok) {
+          alert("⚠️ Failed to start run");
+          return;
+        }
+        const data = await resp.json();
+        state.runId = data.id;
+
+        // ✅ use runId as the key
+        startTimerFor(timerEl, state.runId, 0);
+        updateUIRunning(outletId);
+      } catch (err) {
+        alert("⚠️ Failed to start run");
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function stopRun(outletId) {
+      const btn = document.getElementById(`btn-${outletId}`);
+      const timerEl = document.getElementById(`timer-${outletId}`);
+      btn.disabled = true;
+      const state = outletState[outletId];
+      if (!state || !state.runId) {
+        updateUICompleted(outletId);
+        // ✅ clear any stray timer
+        stopTimerFor(state?.runId || outletId, timerEl, 0);
+        btn.disabled = false;
+        return;
+      }
+      try {
+        const { lat, lng } = await getLocation();
+        const resp = await fetch(`/api/runs/${state.runId}/stop/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            gps_lat_end: lat,
+            gps_lng_end: lng,
+            temperature_c: 28
+          })
+        });
+        if (!resp.ok) {
+          alert("⚠️ Failed to stop run");
+          return;
+        }
+        const data = await resp.json();
+
+        // ✅ stop by runId, not outletId
+        stopTimerFor(data.id, timerEl, data.duration_seconds || 0);
+
+        state.runId = null;
+        updateUICompleted(outletId);
+      } catch (err) {
+        alert("⚠️ Failed to stop run");
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    document.querySelectorAll("button.start").forEach(btn => {
+      const outletId = btn.dataset.outlet;
+      btn.onclick = () => startRun(outletId);
+      const timerEl = document.getElementById(`timer-${outletId}`);
+      // initialize display
+      timerEl.textContent = "00:00";
+    });
+
+    disableBackIfRunning();
+  </script>
+</body>
+</html>

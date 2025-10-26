@@ -1,0 +1,169 @@
+{% load i18n %}
+{% load static %}
+{% load jalali_extras %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% trans "Supervisor Dashboard" %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>{% trans "Run History" %}</h2>
+    <button id="filter-anomalies" class="btn btn-outline-warning">
+      {% trans "Show only anomalies" %}
+    </button>
+  </div>
+
+  <!-- Farm Tabs -->
+  <ul class="nav nav-tabs" id="farmTabs" role="tablist">
+    {% for farm in farms %}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link {% if forloop.first %}active{% endif %}"
+                id="farm-{{ farm.id }}-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#farm-{{ farm.id }}"
+                type="button" role="tab">
+          {{ farm.name }}
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="tab-content mt-3" id="farmTabsContent">
+    {% for farm in farms %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}"
+           id="farm-{{ farm.id }}" role="tabpanel">
+
+        <!-- Zone Tabs -->
+        <ul class="nav nav-pills mb-3" id="zoneTabs-{{ farm.id }}" role="tablist">
+          {% for zone in farm.zones.all %}
+            <li class="nav-item" role="presentation">
+              <button class="nav-link {% if forloop.first %}active{% endif %}"
+                      id="zone-{{ zone.id }}-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#zone-{{ zone.id }}"
+                      type="button" role="tab">
+                {{ zone.name }}
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="tab-content" id="zoneTabsContent-{{ farm.id }}">
+          {% for zone in farm.zones.all %}
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}"
+                 id="zone-{{ zone.id }}" role="tabpanel">
+
+              <!-- Plot Tabs -->
+              <ul class="nav nav-pills mb-3" id="plotTabs-{{ zone.id }}" role="tablist">
+                {% for plot in zone.plots.all %}
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link {% if forloop.first %}active{% endif %}"
+                            id="plot-{{ plot.id }}-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#plot-{{ plot.id }}"
+                            type="button" role="tab">
+                      {{ plot.name }}
+                    </button>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <div class="tab-content" id="plotTabsContent-{{ zone.id }}">
+                {% for plot in zone.plots.all %}
+                  <div class="tab-pane fade {% if forloop.first %}show active{% endif %}"
+                       id="plot-{{ plot.id }}" role="tabpanel">
+
+                    <!-- Run History Table for this plot -->
+                    <table class="table table-striped table-hover align-middle">
+                      <thead class="table-light">
+                        <tr>
+                          <th>{% trans "Outlet" %}</th>
+                          <th>{% trans "Start" %}</th>
+                          <th>{% trans "Temp." %}</th>
+                          <th>{% trans "Duration" %}</th>
+                          <th>{% trans "Timer" %}</th>
+                          <th>{% trans "Anomalies" %}</th>
+                        </tr>
+                      </thead>
+                      <tbody id="plot-body-{{ plot.id }}">
+                        {% for outlet in plot.outlets.all %}
+                          {% for run in outlet.runs.all %}
+                            <tr id="run-row-{{ run.id }}"
+                                class="{% if run.is_anomalous_short or run.is_anomalous_long %}table-danger{% else %}table-success{% endif %}">
+                              <td data-outlet-number>{{ outlet.number }}</td>
+                              <td data-started-at>{{ run.started_at|to_jalali:"%Y/%m/%d %H:%M:%S" }}</td>
+                              <td data-temperature>{{ run.temperature_c }}°C</td>
+                              <td data-duration>{{ run.duration_seconds }}s</td>
+                              <td>
+                                <span class="timer"
+                                      id="timer-{{ run.id }}"
+                                      data-runid="{{ run.id }}"
+                                      data-elapsed="{{ run.elapsed_seconds }}"
+                                      data-running="{{ run.is_running|yesno:'true,false' }}">
+                                </span>
+                              </td>
+                              <td id="anomaly-{{ run.id }}" data-anomaly-cell>
+                                {% if run.is_anomalous_short %}
+                                  <span class="badge bg-danger">{% trans "Short" %}</span>
+                                {% endif %}
+                                {% if run.is_anomalous_long %}
+                                  <span class="badge bg-danger">{% trans "Long" %}</span>
+                                {% endif %}
+                                {% if not run.is_anomalous_short and not run.is_anomalous_long %}
+                                  <span class="badge bg-success">{% trans "Normal" %}</span>
+                                {% endif %}
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                {% endfor %}
+              </div>
+
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center mt-4 text-muted">
+    <small>&copy; {{ now|date:"Y" }} Water Management System</small>
+  </footer>
+
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Jalaali date conversion library -->
+  <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+
+  <!-- Inline config for translations -->
+  <script>
+    window.dashboardConfig = {
+      labels: {
+        short: "{% trans 'Short' %}",
+        long: "{% trans 'Long' %}",
+        normal: "{% trans 'Normal' %}"
+      }
+    };
+  </script>
+
+  <!-- External JS -->
+  <!-- Shared timer helpers -->
+  <script src="{% static 'water/timers.js' %}"></script>
+  <!-- Supervisor dashboard logic -->
+  <script src="{% static 'water/dashboard.js' %}"></script>
+</body>
+</html>

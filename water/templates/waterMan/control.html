@@ -1,0 +1,59 @@
+{% load static i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% trans "Water Control" %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
+</head>
+<body class="container py-3">
+
+  <!-- Header -->
+  <div class="header d-flex justify-content-between mb-3">
+    <h3>{% trans "Water Control" %}</h3>
+    <button class="end-app btn btn-outline-dark">{% trans "End" %}</button>
+  </div>
+
+  <!-- Current run -->
+  <div id="current-run" class="card p-3 mb-3 text-center">
+    <div id="idle-state">
+      <button id="pick-outlet" class="btn btn-secondary btn-lg">
+        {% trans "Pick outlet" %}
+      </button>
+    </div>
+    <div id="active-state" class="d-none">
+      <h4 id="outlet-label"></h4>
+      <div class="display-6 text-success" id="timer">00:00</div>
+      <button id="stop-btn" class="btn btn-danger btn-lg mt-3">
+        {% trans "Stop" %}
+      </button>
+    </div>
+  </div>
+
+  <!-- Queue -->
+  <div id="queue" class="list-group mb-3">
+    <!-- Dynamically filled with queued outlets -->
+  </div>
+
+  <!-- Footer -->
+  <div class="footer text-center">
+    <button id="next" class="btn btn-primary btn-lg">{% trans "Next" %}</button>
+  </div>
+
+  <!-- Load your JS at the bottom -->
+  <script src="{% static 'water/js/control.js' %}"></script>
+  <script>
+    // Wire up buttons to functions defined in control.js
+    document.getElementById("stop-btn").addEventListener("click", () => stopRun(currentRunId));
+    document.getElementById("pick-outlet").addEventListener("click", () => {
+      // TODO: open outlet picker modal
+      startRun(1); // demo: start outlet #1
+    });
+    document.getElementById("next").addEventListener("click", () => {
+      // TODO: add next outlet to queue
+      alert("Next outlet queued (demo)");
+    });
+  </script>
+</body>
+</html>

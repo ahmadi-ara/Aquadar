@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Waterman App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; text-align: center; margin: 2em; }
+    select, button { width: 90%; padding: 1em; font-size: 1.2em; margin: 0.5em 0; }
+    button { border: none; border-radius: 10px; color: white; background: blue; }
+    .disabled { opacity: 0.6; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <h1>💧 Waterman</h1>
+
+  <label for="zone">Select Zone:</label>
+  <select id="zone">
+    <option value="">-- Select Zone --</option>
+  </select>
+
+  <label for="plot">Select Plot:</label>
+  <select id="plot" disabled>
+    <option value="">-- Select Plot --</option>
+  </select>
+
+  <button id="goBtn" class="disabled">Go ➡️</button>
+
+<script>
+  const zoneSelect = document.getElementById("zone");
+  const plotSelect = document.getElementById("plot");
+  const goBtn = document.getElementById("goBtn");
+
+  // Load zones
+  fetch("/api/zones/")
+    .then(r => r.json())
+    .then(zones => {
+      zones.forEach(z => {
+        const opt = document.createElement("option");
+        opt.value = z.id;
+        opt.textContent = z.name;
+        zoneSelect.appendChild(opt);
+      });
+    });
+
+  zoneSelect.addEventListener("change", function() {
+    const zoneId = this.value;
+    plotSelect.innerHTML = '<option value="">-- Select Plot --</option>';
+    plotSelect.disabled = true;
+    goBtn.classList.add("disabled");
+
+    if (!zoneId) return;
+
+    fetch(`/api/plots/?zone=${zoneId}`)
+      .then(r => r.json())
+      .then(plots => {
+        console.log("Plots for zone", zoneId, plots); // ✅ debug
+        plotSelect.disabled = false;
+        plots.forEach(p => {
+          const opt = document.createElement("option");
+          opt.value = p.id;
+          opt.textContent = p.name;
+          plotSelect.appendChild(opt);
+        });
+      });
+  });
+
+  plotSelect.addEventListener("change", function() {
+    if (this.value) {
+      goBtn.classList.remove("disabled");
+    } else {
+      goBtn.classList.add("disabled");
+    }
+  });
+
+  goBtn.addEventListener("click", function() {
+    if (!plotSelect.value) return;
+    window.location.href = `/waterman/plot/${plotSelect.value}/`;
+  });
+</script>
+
+</body>
+</html>

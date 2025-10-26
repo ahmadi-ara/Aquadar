@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="44868062-5159-4100-afdb-60d28bb4d24c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/._.DS_Store" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Aquadar.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/._views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/analytics.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/permissions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/reports.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/signals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/static/water/control.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/static/water/dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/static/water/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/static/water/timers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/dashboard/charts.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/registration/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/water/dashboard.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/water/outlet_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/water/waterman_ui.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templates/waterMan/control.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templatetags/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/templatetags/jalali_extras.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/utils/anomalies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/utils/notifications.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/utils/weather.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/water/views_dashboard.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watermgmt/._.DS_Store" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watermgmt/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watermgmt/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watermgmt/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watermgmt/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/watermgmt/wsgi.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="34bhy19cfhpQKjSCS96k4yx4s3o" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/ARA/PycharmProjects/Aquadar"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-41e8cd69c857-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="44868062-5159-4100-afdb-60d28bb4d24c" name="Changes" comment="" />
+      <created>1761488432829</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761488432829</updated>
+    </task>
+    <servers />
+  </component>
+</project>

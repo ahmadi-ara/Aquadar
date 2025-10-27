@@ -5,6 +5,9 @@ from water import urls as water_urls
 from water.views import post_login_redirect   # 👈 import the redirect view
 
 urlpatterns = [
+    # PWA
+    path('', include('pwa.urls')),
+
     path("admin/", admin.site.urls),
 
     # API endpoints mounted under /api/

@@ -4,52 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44868062-5159-4100-afdb-60d28bb4d24c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/._.DS_Store" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Aquadar.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/._views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/analytics.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/permissions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/reports.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/signals.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/static/water/control.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/static/water/dashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/static/water/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/static/water/timers.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/dashboard/charts.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/registration/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/water/dashboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/water/outlet_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/water/waterman_ui.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templates/waterMan/control.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templatetags/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/templatetags/jalali_extras.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/utils/anomalies.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/utils/notifications.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/utils/weather.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/water/views_dashboard.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watermgmt/._.DS_Store" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watermgmt/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watermgmt/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watermgmt/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watermgmt/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/watermgmt/wsgi.py" afterDir="false" />
+    <list default="true" id="d9180bbe-1e98-422b-8493-2a02594e80bb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/water/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/water/templates/water/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/water/templates/water/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/water/templates/water/waterman_ui.html" beforeDir="false" afterPath="$PROJECT_DIR$/water/templates/water/waterman_ui.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/water/templates/waterMan/control.html" beforeDir="false" afterPath="$PROJECT_DIR$/water/templates/waterMan/control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/watermgmt/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/watermgmt/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/watermgmt/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/watermgmt/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,41 +19,69 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
-  <component name="ProjectId" id="34bhy19cfhpQKjSCS96k4yx4s3o" />
+  <component name="ProjectId" id="34eJAshiMO9qBEj6i9Iq7r77AXy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/ARA/PycharmProjects/Aquadar"
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "F:/Project-Company/Unknown/aquadar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-python-sdk-41e8cd69c857-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.90" />
-      </set>
-    </attachedChunks>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Project-Company\Unknown\aquadar" />
+    </key>
   </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="aquadar" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="44868062-5159-4100-afdb-60d28bb4d24c" name="Changes" comment="" />
-      <created>1761488432829</created>
+      <changelist id="d9180bbe-1e98-422b-8493-2a02594e80bb" name="Changes" comment="" />
+      <created>1761567963713</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1761488432829</updated>
+      <updated>1761567963713</updated>
+      <workItem from="1761567965758" duration="1416000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

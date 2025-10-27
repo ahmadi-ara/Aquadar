@@ -1,0 +1,17 @@
+{% load static %}
+{% load pwa %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Water Management{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% pwa_meta_data %}
+</head>
+<body>
+{% block content %}{% endblock %}
+{% pwa_meta_script %}
+
+<script src="{% static 'scripts/base.js' "></script>
+</body>
+</html>

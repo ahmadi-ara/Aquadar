@@ -1,6 +1,8 @@
+{% load pwa %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% pwa_meta_data %}
   <meta charset="UTF-8">
   <title>Waterman App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +14,7 @@
   </style>
 </head>
 <body>
+    {% include 'base/components/install.html' %}
   <h1>💧 Waterman</h1>
 
   <label for="zone">Select Zone:</label>
@@ -78,6 +81,8 @@
     window.location.href = `/waterman/plot/${plotSelect.value}/`;
   });
 </script>
+  <script src="{% static 'scripts/base.js' %}"></script>
+  {% pwa_meta_script %}
 
 </body>
 </html>

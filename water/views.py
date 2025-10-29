@@ -174,6 +174,7 @@ class RunViewSet(viewsets.ModelViewSet):
 from django.utils import timezone
 from django.db.models import Q
 
+@login_required
 def dashboard(request):
     """
     Renders the supervisor dashboard with hierarchical farm/zone/plot/outlet structure.

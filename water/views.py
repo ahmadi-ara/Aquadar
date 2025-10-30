@@ -1,6 +1,6 @@
-from django.shortcuts import  render
+from django.shortcuts import render
 from django.db.models import Q
-from .models import  Outlet, Farm, Zone, Plot
+from .models import Outlet, Farm, Zone, Plot
 from .serializers import (
     RunSerializer,
     OutletSerializer,
@@ -16,19 +16,20 @@ from datetime import timezone
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, HttpResponse
+from django.core.exceptions import PermissionDenied
 
 from .models import Run
 from .serializers import RunSerializer
 from .utils.weather import fetch_temperature_c
-from .utils.anomalies import  check_run_anomalies
-from .utils.notifications import  notify_supervisors
+from .utils.anomalies import check_run_anomalies
+from .utils.notifications import notify_supervisors
 
 
 # ------------------ Farm / Zone / Plot / Outlet ViewSets ------------------
 
 class FarmViewSet(viewsets.ModelViewSet):
-    queryset = Farm.objects.all()   # ‚úÖ default queryset
+    queryset = Farm.objects.all()  # ‚úÖ default queryset
     serializer_class = FarmSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -40,8 +41,9 @@ class FarmViewSet(viewsets.ModelViewSet):
             return user.supervisor_profile.farms.all()
         return Farm.objects.none()
 
+
 class ZoneViewSet(viewsets.ModelViewSet):
-    queryset = Zone.objects.all()   # ‚úÖ default queryset
+    queryset = Zone.objects.all()  # ‚úÖ default queryset
     serializer_class = ZoneSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -52,6 +54,7 @@ class ZoneViewSet(viewsets.ModelViewSet):
         elif hasattr(user, "supervisor_profile"):
             return Zone.objects.filter(farm__in=user.supervisor_profile.farms.all())
         return Zone.objects.none()
+
 
 class PlotViewSet(viewsets.ModelViewSet):
     queryset = Plot.objects.all()
@@ -74,8 +77,9 @@ class PlotViewSet(viewsets.ModelViewSet):
 
         return qs
 
+
 class OutletViewSet(viewsets.ModelViewSet):
-    queryset = Outlet.objects.all()   # ‚úÖ default queryset
+    queryset = Outlet.objects.all()  # ‚úÖ default queryset
     serializer_class = OutletSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -86,6 +90,7 @@ class OutletViewSet(viewsets.ModelViewSet):
         elif hasattr(user, "supervisor_profile"):
             return Outlet.objects.filter(plot__zone__farm__in=user.supervisor_profile.farms.all())
         return Outlet.objects.none()
+
 
 # ------------------ Run ViewSet ------------------
 
@@ -138,7 +143,6 @@ class RunViewSet(viewsets.ModelViewSet):
         run.gps_lat_end = request.data.get("gps_lat_end")
         run.gps_lng_end = request.data.get("gps_lng_end")
 
-
         # Fetch temperature at stop time (or use provided)
         temp = request.data.get("temperature_c")
         if temp is None:
@@ -174,11 +178,16 @@ class RunViewSet(viewsets.ModelViewSet):
 from django.utils import timezone
 from django.db.models import Q
 
+
 @login_required
-def dashboard(request):
+def supervisor_ui(request):
     """
     Renders the supervisor dashboard with hierarchical farm/zone/plot/outlet structure.
     """
+
+    if not hasattr(request.user, "supervisor_profile"):
+        raise PermissionDenied
+
     farms = Farm.objects.prefetch_related(
         "zones__plots__outlets__runs"
     )
@@ -217,14 +226,15 @@ def waterman_ui(request):
     context = {"farms": []}
     for farm in farms:
         farm_data = {"farm": farm, "zones": []}
-        for zone in farm.zones.all():   # requires related_name="zones" on Zone.farm
+        for zone in farm.zones.all():  # requires related_name="zones" on Zone.farm
             zone_data = {
                 "zone": zone,
-                "plots": zone.plots.all()   # only plots for this zone
+                "plots": zone.plots.all()  # only plots for this zone
             }
             farm_data["zones"].append(zone_data)
         context["farms"].append(farm_data)
     return render(request, "water/waterman_ui.html", context)
+
 
 @login_required
 def outlet_list(request, plot_id):
@@ -249,7 +259,12 @@ def outlet_list(request, plot_id):
 def post_login_redirect(request):
     user = request.user
     if hasattr(user, "supervisor_profile"):
-        return redirect("dashboard")      # supervisors ‚Üí dashboard
+        return redirect("dashboard_supervisor")  # supervisors ‚Üí dashboard
     elif hasattr(user, "waterman_profile"):
-        return redirect("waterman_ui")    # watermen ‚Üí waterman UI
-    return redirect("dashboard")          # fallback
+        return redirect("waterman_supervisor")  # watermen ‚Üí waterman UI
+    return HttpResponse('User Not Found..!')
+
+
+@login_required
+def dashboard(request):
+    return post_login_redirect(request)

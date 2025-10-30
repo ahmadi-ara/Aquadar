@@ -39,7 +39,7 @@ class Run(models.Model):
     outlet = models.ForeignKey(
         Outlet,
         on_delete=models.CASCADE,
-        related_name="runs"   # ✅ gives Outlet.runs reverse relation
+        related_name="runs"  # ✅ gives Outlet.runs reverse relation
     )
     started_at = models.DateTimeField()
     ended_at = models.DateTimeField(null=True, blank=True)
@@ -63,7 +63,6 @@ class Run(models.Model):
         jdt = jdatetime.datetime.fromgregorian(datetime=self.started_at)
         return jdt.strftime('%Y/%m/%d %H:%M:%S')
 
-
     def __str__(self):
         return f"Run {self.id} on {self.outlet}"
 
@@ -73,7 +72,6 @@ class Run(models.Model):
         if self.started_at and self.ended_at:
             return int((self.ended_at - self.started_at).total_seconds())
         return None
-
 
 
 class Supervisor(models.Model):
